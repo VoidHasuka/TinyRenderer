@@ -16,7 +16,7 @@ ssloy贴心提供了关于tgaimage的源文件和头文件，不必去理会它�
 
 直线类型确定：
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/Bresenham算法绘制直线.jpg)
+![](TinyRenderer对应图像/Bresenham算法绘制直线.jpg)
 
 首先考虑以x0，y0为原点来确定直线的区域，并转换到1区域。
 
@@ -30,7 +30,7 @@ ssloy贴心提供了关于tgaimage的源文件和头文件，不必去理会它�
 
 执行绘制方案：
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/绘制方案.jpg)
+![](TinyRenderer对应图像/绘制方案.jpg)
 
 对于1区域，以x0，y0为原点，通过计算F(x0+1)与(y0+0.5)的值比较（同时以E作为误差统计），即dy/dx*(x0+1)=y0+dy/dx<y0+0.5 => **2dy<dx**，记E=2dy-dx。
 
@@ -100,19 +100,19 @@ int main(int argc, char** argv) {
 
 绘制结果：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/未填充的三角形.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/未填充的三角形.jpg" style="zoom:50%;" />
 
 那么该如何去填充这个三角形呢？容易想到的是，使用一条条横线填充。
 
 横线左右两端点A与B计算如下：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/横线法三角形计算.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/横线法三角形计算.jpg" style="zoom:50%;" />
 
 将输入的三个顶点按y值从大到小排为T2，T1，T0，通过绿色来求出A的坐标，当A的Y小于T1时B坐标使用黄色来求，反之使用粉色来求。
 
 有没有更好一点的方法？事实上，横线法已经属于很古老的办法了，目前基本上是使用重心法来填充。
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/重心法三角形计算.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/重心法三角形计算.jpg" style="zoom:50%;" />
 
 基于给定的三个顶点创建一个长方形包围盒，对包围盒内每一个点进行遍历，若该点位于三角形内则渲染，反之则不渲染。关于怎么判断点是否在三角形内，可以采用重心计算。
 
@@ -207,7 +207,7 @@ int main(int argc, char** argv) {
 
 效果图像：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/七彩人头.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/七彩人头.jpg" style="zoom:50%;" />
 
 太丑了，干脆引入光照吧！
 
@@ -215,7 +215,7 @@ int main(int argc, char** argv) {
 
 计算如图所示：
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/光强计算.jpg)
+![](TinyRenderer对应图像/光强计算.jpg)
 
 关于法线方向，模型已经给出，此处仅需作简单计算。
 
@@ -248,7 +248,7 @@ int main(int argc, char** argv) {
 
 得到图像：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/简单光照处理后的图像.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/简单光照处理后的图像.jpg" style="zoom:50%;" />
 
 观察可以发现，嘴巴处仍然有问题，这是因为没有做背面剔除（Z-buffer算法）。
 
@@ -284,7 +284,7 @@ if (zDepth > zBuffer[P.x + P.y * width]) {
 
 得到结果图如下：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/背面剔除后的图像.jpg" style="zoom: 50%;" />
+<img src="TinyRenderer对应图像/背面剔除后的图像.jpg" style="zoom: 50%;" />
 
 
 
@@ -294,7 +294,7 @@ if (zDepth > zBuffer[P.x + P.y * width]) {
 
 在前边的渲染中，采用的是正交投影，而我们对世界的观察遵循的是透视投影，为此，需要进行视角变换。
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/旋转二维矩阵变换.jpg)
+![](TinyRenderer对应图像/旋转二维矩阵变换.jpg)
 
 通过一个单位正方形的旋转，我们得到了旋转矩阵：
 $$
@@ -324,7 +324,7 @@ $$
 $$
 \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 2 & 0 & 1 \end{bmatrix} \begin{bmatrix} x\\ y\\ 1\\ \end{bmatrix} = \begin{bmatrix} x\\ y\\ 2x+1 \end{bmatrix}\equiv\begin{bmatrix} \frac{x}{2x+1} \\ \frac{y}{2x+1} \\1 \end{bmatrix}
 $$
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/二维透视变换.jpg)
+![](TinyRenderer对应图像/二维透视变换.jpg)
 
 可见，随着x的增加，对应的图像在不停变小，这恰好就是透视的表现。
 
@@ -341,7 +341,7 @@ $$
 $$
 为什么r有值？我们的摄像机位于z轴上，即我们执行透视的轴是z轴（上述二维透视执行透视的轴是x轴），并且我们需要计算出r的值：
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/摄像机r值确定.jpg)
+![](TinyRenderer对应图像/摄像机r值确定.jpg)
 
 可见，为了实现同一透视变换（对于所有图像的透视终点在位于摄像机时为无限小），对应的透视矩阵如下：
 $$
@@ -402,7 +402,7 @@ Projection[3][2] = -1.f/camera.z;
 screen_coords[j] = m2v(ViewPort * Projection * v2m(v));
 ```
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/透视后的图像.jpg" style="zoom: 20%;" />
+<img src="TinyRenderer对应图像/透视后的图像.jpg" style="zoom: 20%;" />
 
 透视后的图像如图所示（相机z坐标为2）。
 
@@ -450,7 +450,7 @@ void triangle(Vec3i* pts,Vec2i* uvs, TGAImage& img, float intensity,int* zBuffer
 }
 ```
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/添加纹理.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/添加纹理.jpg" style="zoom:50%;" />
 
 终于不是黑白图像了，可喜可贺。
 
@@ -462,7 +462,7 @@ void triangle(Vec3i* pts,Vec2i* uvs, TGAImage& img, float intensity,int* zBuffer
 
 且在线性代数的学习中，我们能够知道，一个矩阵对应一个变换，而矩阵的逆对应着它的反变换。
 
-![](G:/Github Projects/TinyRenderer/TinyRenderer对应图像/摄像机坐标变换.jpg)
+![](TinyRenderer对应图像/摄像机坐标变换.jpg)
 
 旋转后，摄像机的坐标为(x,y,z)，又因为我们是考虑物体的相对移动，故而旋转后是x轴、y轴、z轴发生变化，且摄像机仍看向(0,0,0)，从而可知现在z轴的方向为：(x,y,z)-(0,0,0) = (x,y,z)。
 
@@ -546,7 +546,7 @@ Matrix lookat(Vec3f eye, Vec3f center, Vec3f up) {
 
 现在我们将摄像机坐标设为(2,1,3)，观察中心设为(0,0,1)，得到图像：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/摄像机移动后的图像.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/摄像机移动后的图像.jpg" style="zoom:50%;" />
 
 非常成功！
 
@@ -581,7 +581,7 @@ img.set(P.x, P.y, bc_Color);
 
 获得图像：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/插值着色后的图像.jpg" style="zoom:50%;" />
+<img src="TinyRenderer对应图像/插值着色后的图像.jpg" style="zoom:50%;" />
 
 完美！
 
@@ -906,10 +906,10 @@ int main(int argc, char** argv){
 
 挑选Phong着色器着色后模型如下：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/Phong着色图像.jpg" style="zoom:33%;" />
+<img src="TinyRenderer对应图像/Phong着色图像.jpg" style="zoom:33%;" />
 
 挑选Toon着色器着色后模型如下：
 
-<img src="G:/Github Projects/TinyRenderer/TinyRenderer对应图像/Toon着色图像.jpg" style="zoom:33%;" />
+<img src="TinyRenderer对应图像/Toon着色图像.jpg" style="zoom:33%;" />
 
 至此，本次作业完成！
